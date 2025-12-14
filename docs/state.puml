@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Created
+    Created --> Submitted : ініціація
+    Submitted --> Approved : погодження
+    Approved --> Implemented : реалізація
+    Implemented --> Closed : акт приймання
+    Closed --> [*]

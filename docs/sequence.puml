@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant Прораб
+    participant Інженер
+    participant Проєкт
+
+
+    Прораб->>Проєкт: initiateChange()
+    Проєкт->>Інженер: notifyChange()
+    Інженер->>Інженер: approveChange()
+    Інженер->>Проєкт: updateSchedule()
+    Прораб->>Проєкт: closeStage()
