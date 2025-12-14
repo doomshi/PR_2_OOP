@@ -1,7 +1,9 @@
 stateDiagram-v2
-    [*] --> Created
-    Created --> Submitted : ініціація
-    Submitted --> Approved : погодження
-    Approved --> Implemented : реалізація
-    Implemented --> Closed : акт приймання
+    [*] --> Created:  ProjectChange створено
+    Created --> Submitted: foreman.initiateChange()
+    Submitted --> Added: project.addChange()
+    Added --> Reviewed: engineer.handleChange()
+    Reviewed --> Approved: engineer.approveChange()
+    Approved --> ScheduleUpdated: engineer.updateSchedule()
+    ScheduleUpdated --> Closed: foreman.closeStage()
     Closed --> [*]

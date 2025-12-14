@@ -1,11 +1,32 @@
 sequenceDiagram
-    participant Прораб
-    participant Інженер
-    participant Проєкт
+    participant Main
+    participant Foreman
+    participant ConstructionProject
+    participant Engineer
+    participant Supplier
 
+    Main->>Foreman:  initiateChange("Extend foundation depth", "Increased cost and time")
+    Foreman->>ProjectChange: new ProjectChange(desc, impact)
+    ProjectChange-->>Foreman: change object
+    Foreman-->>Main: return change
 
-    Прораб->>Проєкт: initiateChange()
-    Проєкт->>Інженер: notifyChange()
-    Інженер->>Інженер: approveChange()
-    Інженер->>Проєкт: updateSchedule()
-    Прораб->>Проєкт: closeStage()
+    Main->>ConstructionProject: addChange(change)
+    ConstructionProject->>ProjectChange: add to list
+    ProjectChange-->>ConstructionProject: added
+    ConstructionProject-->>Main: completion
+
+    Main->>Engineer: handleChange(change)
+    Engineer->>Engineer: approveChange(change)
+    Engineer->>Engineer: updateSchedule()
+    Engineer-->>Main: completion
+
+    Main->>Foreman: closeStage()
+    Foreman-->>Main: completion
+
+    Main->>Supplier: deliverMaterials(project)
+    Supplier->>ConstructionProject: getTitle()
+    ConstructionProject-->>Supplier: project title
+    Supplier-->>Main: completion
+
+    Main->>ConstructionProject: getStatus()
+    ConstructionProject-->>Main: return "Active (changes:  1)"

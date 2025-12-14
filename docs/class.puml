@@ -1,74 +1,78 @@
 classDiagram
-    %% ===== Абстракції =====
     class Participant {
-    <<abstract>>
-    -id: int
-    -name: String
-    +getRole(): String
-}
+        <<abstract>>
+        -id: int
+        -name: String
+        +getId() int
+        +getName() String
+        +getRole() String*
+    }
 
+    class IProjectChangeHandler {
+        <<interface>>
+        +handleChange(c: ProjectChange) void
+    }
 
-class IProjectChangeHandler {
-    <<interface>>
-    +handleChange(c: ProjectChange)
-}
+    class Foreman {
+        -experienceYears:  int
+        +Foreman(id: int, name: String, experienceYears: int)
+        +initiateChange(desc: String, impact: String) ProjectChange
+        +closeStage() void
+        +handleChange(c: ProjectChange) void
+        +getRole() String
+    }
 
+    class Engineer {
+        -licenseNumber: String
+        +Engineer(id: int, name:  String, licenseNumber: String)
+        +approveChange(c: ProjectChange) boolean
+        +updateSchedule() void
+        +handleChange(c:  ProjectChange) void
+        +getRole() String
+    }
 
-    %% ===== Конкретні учасники =====
-class Foreman {
-    -experienceYears: int
-    +Foreman(id, name, experienceYears)
-    +initiateChange(desc): ProjectChange
-    +closeStage(): void
-}
+    class Supplier {
+        -companyName: String
+        +Supplier(id: int, name: String, companyName: String)
+        +deliverMaterials(project: ConstructionProject) void
+        +getRole() String
+    }
 
+    class ConstructionProject {
+        -title: String
+        -changes: List~ProjectChange~
+        +ConstructionProject(title: String)
+        +getTitle() String
+        +addChange(c: ProjectChange) void
+        +getStatus() String
+        +getChanges() List~ProjectChange~
+    }
 
-class Engineer {
-    -licenseNumber: String
-    +Engineer(id, name, licenseNumber)
-    +approveChange(c: ProjectChange): boolean
-    +updateSchedule(): void
-}
+    class ProjectChange {
+        -description:  String
+        -impact: String
+        +ProjectChange(description: String, impact: String)
+        +getDescription() String
+        +getImpact() String
+        +toString() String
+    }
 
+    class Main {
+        +main(args: String[]) void
+    }
 
-class Supplier {
-    -companyName: String
-    +Supplier(id, name, companyName)
-    +deliverMaterials(): void
-}
-
-
-%% ===== Бізнес-обʼєкти =====
-class ConstructionProject {
-    -title: String
-    -changes: List<ProjectChange>
-    +ConstructionProject(title)
-    +addChange(c: ProjectChange)
-    +final getStatus(): String
-}
-
-
-class ProjectChange {
-    -description: String
-    -impact: String
-    +ProjectChange(desc, impact)
-}
-
-
-%% ===== Звʼязки =====
     Participant <|-- Foreman
     Participant <|-- Engineer
     Participant <|-- Supplier
 
-
-    IProjectChangeHandler <|.. Foreman
+    IProjectChangeHandler <|..  Foreman
     IProjectChangeHandler <|.. Engineer
 
-
     Foreman --> ProjectChange : creates
-    Engineer --> ProjectChange : reviews
-
-
-
+    Engineer --> ProjectChange : reviews/approves
     ConstructionProject o-- ProjectChange : aggregation
-    Supplier ..> ConstructionProject : dependency
+    Supplier .. > ConstructionProject : dependency
+    Main --> Foreman : creates
+    Main --> Engineer : creates
+    Main --> Supplier : creates
+    Main --> ConstructionProject : creates
