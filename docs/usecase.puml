@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+
+' === Актори ===
+actor "Учасник будівництва" as AbstractUser
+actor "Прораб" as Foreman
+actor "Інженер технагляду" as Engineer
+actor "Постачальник" as Supplier
+
+' === Наслідування акторів (Generalization) ===
+AbstractUser <|-- Foreman
+AbstractUser <|-- Engineer
+AbstractUser <|-- Supplier
+
+' === Зовнішня система ===
+actor "Кошторисний сервіс" as CostService <<external>>
+
+' === Межа системи ===
+rectangle "Система управління будівництвом" {
+
+    usecase "Ініціювати зміну у проєкті\n(з описом впливу)" as UC_InitChange
+    usecase "Погодити зміни" as UC_Approve
+    usecase "Оновити графік" as UC_Update
+    usecase "Завезти матеріали\nна об’єкт" as UC_Deliver
+    usecase "Закрити етап\n(Акт приймання)" as UC_Close
+}
+
+' === Зв'язки акторів з варіантами використання ===
+Foreman --> UC_InitChange
+Foreman --> UC_Close
+
+Engineer --> UC_Approve
+Engineer --> UC_Update
+
+Supplier --> UC_Deliver
+
+' === Взаємодія із зовнішньою системою ===
+UC_InitChange ..> CostService : передає дані\nпро зміни
+
+@enduml
