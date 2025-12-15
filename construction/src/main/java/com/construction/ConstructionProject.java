@@ -9,10 +9,20 @@ public class ConstructionProject {
     private List<ProjectChange> changes;
     private ConstructionService service;
 
-    @com.google.inject.Inject
-    public ConstructionProject(ConstructionService service) {
-        this.service = service;
+    // Constructor injection commented out for Task 3.2
+    // @com.google.inject.Inject
+    // public ConstructionProject(ConstructionService service) {
+    // this.service = service;
+    // this.changes = new ArrayList<>();
+    // }
+
+    public ConstructionProject() {
         this.changes = new ArrayList<>();
+    }
+
+    @com.google.inject.Inject
+    public void setConstructionService(ConstructionService service) {
+        this.service = service;
     }
 
     public void setTitle(String title) {
