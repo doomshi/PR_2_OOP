@@ -1,0 +1,24 @@
+@startuml
+title State Diagram (Construction Workflow)
+
+[*] --> ProjectStarted
+
+state ProjectStarted {
+    [*] --> Idle
+    Idle --> ChangeInitiated : initiate_change()
+    
+    state ChangeManagement {
+        ChangeInitiated --> ChangeHandling : handle_change()
+        ChangeHandling --> ChangeApproved : approve_change() [True]
+        ChangeApproved --> ScheduleUpdated : update_schedule()
+    }
+    
+    ScheduleUpdated --> StageClosing : close_stage()
+    StageClosing --> StageClosed
+}
+
+StageClosed --> MaterialsDelivery : deliver_materials()
+MaterialsDelivery --> ProjectFinished : Simulation End
+ProjectFinished --> [*]
+
+@enduml

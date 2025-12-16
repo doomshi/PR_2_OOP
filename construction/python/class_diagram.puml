@@ -1,0 +1,66 @@
+@startuml
+title Class Diagram
+
+interface IProjectChangeHandler {
+    + handle_change(change: ProjectChange)
+}
+
+abstract class Participant {
+    # _id: int
+    # _name: str
+    + get_id(): int
+    + get_name(): str
+    + {abstract} get_role(): str
+}
+
+class ProjectChange {
+    # _description: str
+    # _impact: str
+    + get_description(): str
+    + get_impact(): str
+    + __str__(): str
+}
+
+class ConstructionProject {
+    # _title: str
+    # _changes: List<ProjectChange>
+    + add_change(change: ProjectChange)
+    + get_status(): str
+    + get_changes(): List<ProjectChange>
+    + get_title(): str
+}
+
+class Foreman {
+    # _experience_years: int
+    + initiate_change(description: str, impact: str): ProjectChange
+    + close_stage()
+    + handle_change(change: ProjectChange)
+    + get_role(): str
+}
+
+class Engineer {
+    # _license_number: str
+    + approve_change(change: ProjectChange): bool
+    + update_schedule()
+    + handle_change(change: ProjectChange)
+    + get_role(): str
+}
+
+class Supplier {
+    # _company_name: str
+    + deliver_materials(project: ConstructionProject)
+    + get_role(): str
+}
+
+Participant <|-- Foreman
+Participant <|-- Engineer
+Participant <|-- Supplier
+
+IProjectChangeHandler <|.. Foreman
+IProjectChangeHandler <|.. Engineer
+
+ConstructionProject "1" o-- "*" ProjectChange : contains
+Supplier ..> ConstructionProject : depends on
+Foreman ..> ProjectChange : creates
+Engineer ..> ProjectChange : processes
+@enduml

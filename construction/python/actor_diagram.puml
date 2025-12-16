@@ -1,0 +1,30 @@
+@startuml
+title Actor (Use Case) Diagram
+left to right direction
+
+actor "Foreman" as f
+actor "Engineer" as e
+actor "Supplier" as s
+
+rectangle "Construction Application" {
+  usecase "Initiate Change" as UC1
+  usecase "Close Stage" as UC2
+  usecase "Handle Change Request" as UC3
+  usecase "Approve Change" as UC4
+  usecase "Update Schedule" as UC5
+  usecase "Deliver Materials" as UC6
+  usecase "View Project Status" as UC7
+}
+
+f --> UC1
+f --> UC2
+note right of UC1 : Creates ProjectChange
+
+e --> UC3
+UC3 .> UC4 : <<include>>
+UC3 .> UC5 : <<include>>
+
+s --> UC6
+note right of UC6 : Requires access to Project
+
+@enduml

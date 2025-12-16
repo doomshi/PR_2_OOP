@@ -1,0 +1,70 @@
+@startuml
+title Sequence Diagram for Main Simulation
+skinparam actorStyle awesome
+autoactivate on
+
+actor User
+participant "Main" as Main
+participant "foreman:Foreman" as Foreman
+participant "engineer:Engineer" as Engineer
+participant "supplier:Supplier" as Supplier
+participant "project:ConstructionProject" as Project
+participant "change:ProjectChange" as Change
+
+User -> Main : main()
+
+create Project
+Main -> Project : __init__("New Office Building")
+return
+
+create Foreman
+Main -> Foreman : __init__(1, "Ivan", 10)
+return
+
+create Engineer
+Main -> Engineer : __init__(2, "Olena", "ENG-12345")
+return
+
+create Supplier
+Main -> Supplier : __init__(3, "Petro", "BuildSupply LLC")
+return
+
+note over Foreman: Foreman initiates a change
+
+Main -> Foreman : initiate_change("Extend foundation...", "Increased cost...")
+create Change
+Foreman -> Change : __init__(...)
+return
+return change
+
+note over Project: Project aggregates the change
+
+Main -> Project : add_change(change)
+return
+
+note over Engineer: Engineer handles the change
+
+Main -> Engineer : handle_change(change)
+Engineer -> Engineer : approve_change(change)
+return True
+Engineer -> Engineer : update_schedule()
+return
+return
+
+note over Foreman: Foreman closes the stage
+
+Main -> Foreman : close_stage()
+return
+
+note over Supplier: Supplier delivers materials (Dependency)
+
+Main -> Supplier : deliver_materials(project)
+Supplier -> Project : get_title()
+return "New Office Building"
+return
+
+Main -> Project : get_status()
+return status
+
+return
+@enduml
