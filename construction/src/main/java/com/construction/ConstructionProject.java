@@ -41,6 +41,13 @@ public class ConstructionProject {
         service.saveProjectChange(c);
     }
 
+    /**
+     * Повертає всі зміни проєкту, зчитані з бази даних.
+     */
+    public List<ProjectChange> getAllProjectChanges() {
+        return service.getAllProjectChanges();
+    }
+
     // Фінальний метод повертає статус проєкту
     public final String getStatus() {
         return "Active (changes: " + changes.size() + ")";

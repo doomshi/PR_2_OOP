@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.construction.webserver.JavalinWebServer;
+import com.construction.webserver.WebServer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -18,6 +20,8 @@ public class ConstructionModule extends AbstractModule {
         bind(String.class)
                 .annotatedWith(Names.named("JDBC URL"))
                 .toInstance("jdbc:sqlite:target/construction.db");
+
+        bind(WebServer.class).to(JavalinWebServer.class);
     }
 
     @Provides

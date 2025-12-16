@@ -33,5 +33,13 @@ public class Main {
 
         System.out.println("[Main] Project status: " + project.getStatus());
         System.out.println("--- Simulation end ---");
+
+        // Запускаємо веб-сервер для перегляду
+        runWebMode(injector);
+    }
+
+    private static void runWebMode(Injector injector) {
+        ConstructionWebView webView = injector.getInstance(ConstructionWebView.class);
+        webView.start(8080);
     }
 }
