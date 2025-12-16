@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from Participant import Participant
+from IProjectChangeHandler import IProjectChangeHandler
+from ProjectChange import ProjectChange
 
 class Engineer(Participant, IProjectChangeHandler):
     def __init__(self, id: int, name: str, license_number: str):

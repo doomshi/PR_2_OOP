@@ -1,3 +1,8 @@
+from ConstructionProject import ConstructionProject
+from Foreman import Foreman
+from Engineer import Engineer
+from Supplier import Supplier
+
 def main():
     print("--- Simulation start ---")
 

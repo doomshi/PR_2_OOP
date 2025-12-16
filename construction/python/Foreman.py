@@ -1,3 +1,7 @@
+from Participant import Participant
+from IProjectChangeHandler import IProjectChangeHandler
+from ProjectChange import ProjectChange
+
 class Foreman(Participant, IProjectChangeHandler):
     def __init__(self, id: int, name: str, experience_years: int):
         super().__init__(id, name)

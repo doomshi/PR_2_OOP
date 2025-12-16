@@ -1,3 +1,5 @@
+from Participant import Participant
+
 class Supplier(Participant):
     def __init__(self, id: int, name: str, company_name: str):
         super().__init__(id, name)
